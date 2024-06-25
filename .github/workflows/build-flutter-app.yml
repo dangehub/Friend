@@ -11,6 +11,9 @@ jobs:
     - name: Checkout source code
       uses: actions/checkout@v4  # 检出源代码
 
+    - name: Set working directory
+      run: cd apps/AppWithWearable/android
+      
     - name: Set up Flutter
       uses: subosito/flutter-action@v2  # 使用 Flutter 环境
 
