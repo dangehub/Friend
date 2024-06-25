@@ -9,7 +9,7 @@ jobs:
 
     steps:
     - name: Checkout source code
-      uses: actions/checkout@v3  # 检出源代码
+      uses: actions/checkout@v4  # 检出源代码
 
     - name: Set up Flutter
       uses: subosito/flutter-action@v2  # 使用 Flutter 环境
