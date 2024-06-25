@@ -1,0 +1,38 @@
+name: Build Flutter App
+
+on: [push, pull_request]  # 触发条件
+
+jobs:
+  build:
+    name: Build and Test Flutter App
+    runs-on: ubuntu-latest  # 使用 Ubuntu 作为运行环境
+
+    steps:
+    - name: Checkout source code
+      uses: actions/checkout@v2  # 检出源代码
+
+    - name: Set up Flutter
+      uses: subosito/flutter-action@v1  # 使用 Flutter 环境
+
+    - name: Install dependencies
+      run: flutter pub get  # 安装依赖
+
+    - name: Check format
+      run: flutter format --dry-run --line-length=120 .  # 检查代码格式
+
+    - name: Analyze code
+      run: flutter analyze .  # 分析代码
+
+    - name: Run tests
+      run: flutter test  # 运行测试
+
+    - name: Build APK
+      if: success()  # 如果前面的步骤成功
+      run: flutter build apk --release  # 构建 APK
+
+    - name: Upload build artifact
+      if: success()  # 如果前面的步骤成功
+      uses: actions/upload-artifact@v2
+      with:
+        name: app-apk
+        path: build/app/outputs/flutter-apk/app-*.apk  # 上传构建的 APK 文件
